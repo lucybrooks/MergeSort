@@ -82,8 +82,22 @@ public class MergeSort {
   * @param list - ArrayList of words to be sorted
   * @return A list representing a sorted version of list that was passed in.
   */
- public static ArrayList<String> mergeSort(ArrayList<String> list) {
-
+ public static ArrayList<String> mergeSort(ArrayList<String> list) 
+ {
+   if(list.size()<=1)
+   {
+     return list;
+   }
+   else
+   {
+     ArrayList<String> left=new ArrayList<String>(list.subList(0, list.size()/2-1));
+     ArrayList<String> right=new ArrayList<String>(list.subList(list.size()/2, list.size()-1));
+     left = mergeSort(left);
+     right= mergeSort(right);
+     
+     list=merge(left, right, list);
+   }
+   return list;
  }
  
  /**
@@ -93,8 +107,26 @@ public class MergeSort {
   * @param rightList The second list to be merged.
   * @return A single list by merging the two parameters in sorted order.
   */
- private static ArrayList<String> merge(ArrayList<String> leftList, ArrayList<String> rightList) {
-   
+ private static ArrayList<String> merge(ArrayList<String> leftList, ArrayList<String> rightList, ArrayList<String> list)
+ {
+   int left=0;
+   int right=0;
+   int whole=0;
+   while(left < leftList.size()&& right < rightList.size())
+   {
+     if((leftList.get(left).compareTo(rightList.get(right)))<0)
+     {
+       list.set(whole, leftList.get(left));
+       left++;
+     }
+     else
+     {
+       list.set(whole, rightList.get(right));
+       right++;
+     }
+     whole++;
+   }
+   return list;
  }
 
  /**
